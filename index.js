@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
 
 
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = "mongodb+srv://aminboni048:aminboni@cluster0.lum0bq6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -43,6 +43,15 @@ async function run() {
         const result = await database.insertOne(abc);
         res.send(result)
     })
+
+    app.delete('/users/:id', async (req,res)=>{
+        const id = req.params.id ;
+        console.log('please Delete ',id);
+        const query = { _id: new ObjectId(id) };
+        const result = await database.deleteOne(query);
+        res.send(result)
+    })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
