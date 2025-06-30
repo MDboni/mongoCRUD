@@ -1,5 +1,6 @@
 import React from 'react'
 import { useState,useEffect } from 'react'
+import {Link} from 'react-router-dom'
 
 const Read = () => {
     const [user,setUser] = useState([])
@@ -23,6 +24,7 @@ const Read = () => {
 
             if (data.deletedCount>0) {
                alert('delet success')
+               setUser(user.filter((u) => u._id !== _id));
       }
         })
   
@@ -32,7 +34,11 @@ const Read = () => {
     <div>
         {
             user.map((item,i) => (
-                <h2 key={i}>{item.name}{item._id}<button onClick={ () => DeletHandel(item._id)}>X</button></h2>
+                <h2 key={i}>{item.name}{item._id}
+                <Link to={`/update/${item._id}`}>
+                  <button>Update</button>
+                </Link>
+                <button onClick={ () => DeletHandel(item._id)}>X</button></h2>
             ))
         }
     </div>
